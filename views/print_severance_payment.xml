@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_severance_payment_detail">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+
+                    <div class="page">
+                        <div class="text-header">
+                            <h4>Ethiopia Security Exchange - Severance Payment</h4>
+                        </div>
+                        <dev>
+                            <h6>Employee: <span t-esc="o.employee_id.name"/> </h6>
+                            <h6>Department: <span t-esc="o.employee_id.department_id.name"/>   </h6>
+                        </dev>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Monthly Salary</th>
+                                    <th>Annual Salary</th>
+                                    <th>Years Worked</th>
+                                    <th>Months Worked</th>
+                                    <th>Days Worked</th>
+                                    <th>Gross Severance Payment</th>
+                                    <th>Tax Rate</th>
+                                    <th>Before Decimal Tax Amount</th>
+                                    <th>After Decimal Tax Amount </th>
+                                    <th>Total Tax Amount</th>
+                                    <th>Net Payment</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span t-esc="o.monthly_salary"/></td>
+                                    <td><span t-esc="o.annual_salary"/></td>
+                                    <td><span t-esc="o.years_worked"/></td>
+                                    <td><span t-esc="o.months_worked"/></td>
+                                    <td><span t-esc="o.days_worked"/></td>
+                                    <td><span t-esc="o.payout_amount"/></td>
+                                    <td><span t-esc="o.payout_ratio"/></td>
+                                    <td><span t-esc="o.adjusted_payout"/></td>
+                                    <td><span t-esc="o.adjusted_payout_after_dot"/></td>
+                                    <td><span t-esc="o.total_adjusted_payout"/></td>
+                                    <td><span t-esc="o.total_payment"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+    <record id="action_report_severance_payment" model="ir.actions.report">
+        <field name="name">Severance Payment</field>
+        <field name="model">severance.payment</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">severance_payment.report_severance_payment_detail</field>
+        <field name="report_file">severance_payment.report_severance_payment_detail</field>
+        <field name="binding_model_id" eval="False"/>
+    </record>
+</odoo>
+
+
+

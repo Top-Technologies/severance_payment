@@ -1,0 +1,56 @@
+<odoo>
+    <data>
+
+        <record id="category_taxded" model="hr.salary.rule.category">
+            <field name="name">Severance Tax Deduct</field>
+            <field name="code">TAXDED</field>
+        </record>
+
+        <record id="category_payalw" model="hr.salary.rule.category">
+            <field name="name">Severance Net Payment</field>
+            <field name="code">PAYALW</field>
+        </record>
+
+        <record id="input_taxsev" model="hr.payslip.input.type">
+            <field name="name">Total Severance Tax</field>
+            <field name="code">TAXSEV</field>
+            <field name="country_id" eval="False"/>
+        </record>
+
+        <record id="input_paysev" model="hr.payslip.input.type">
+            <field name="name">Total Severance Payment</field>
+            <field name="code">PAYSEV</field>
+            <field name="country_id" eval="False"/>
+        </record>
+
+        <record id="hr_payroll.default_structure" model="hr.payroll.structure">
+            <field name="input_line_type_ids" eval="[(4, ref('input_taxsev')), (4, ref('input_paysev'))]"/>
+        </record>
+
+        <record id="hr_salary_rule_tax_severance" model="hr.salary.rule">
+            <field name="name">Total Severance Tax Deduction</field>
+            <field name="code">TAXSEV</field>
+            <field name="sequence" eval="100"/>
+            <field name="category_id" ref="category_taxded"/>
+            <field name="struct_id" ref="hr_payroll.default_structure"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'TAXSEV' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['TAXSEV'].amount</field>
+            <field name="appears_on_payslip" eval="True"/>
+        </record>
+
+        <record id="hr_salary_rule_payment_severance" model="hr.salary.rule">
+            <field name="name">Total Severance Payment</field>
+            <field name="code">PAYSEV</field>
+            <field name="sequence" eval="110"/>
+            <field name="category_id" ref="category_payalw"/>
+            <field name="struct_id" ref="hr_payroll.default_structure"/>
+            <field name="condition_select">python</field>
+            <field name="condition_python">result = 'PAYSEV' in inputs</field>
+            <field name="amount_select">code</field>
+            <field name="amount_python_compute">result = inputs['PAYSEV'].amount</field>
+            <field name="appears_on_payslip" eval="True"/>
+        </record>
+    </data>
+</odoo>
