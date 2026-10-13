@@ -5,7 +5,7 @@
     'description': """
         This module calculates the severance payment for employees based on the number of years they have worked.
     """,
-    'author': 'Tamrat',
+    'author': 'Top Technologies PLC',
     'depends': ['hr', 'hr_contract', 'hr_payroll'],
     'data': [
         'views/print_severance_payment.xml',
